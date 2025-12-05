@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Juan Torres - Desenvolvedor Backend | Laravel & PHP</title>
+  <meta name="description" content="Juan Torres; Software Engineer especializado em Laravel, arquitetura escalável, TDD e DevOps. Backend & PHP." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1724;
+      --muted:#9CA3AF;
+      --text:#E6EEF8;
+      --accent:#6366f1;
+      --accent-2:#8b5cf6;
+      --card:#0b1220;
+      --radius:12px;
+    }
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --muted: #6b7280;
+      --text: #0f1724;
+      --accent: #6366f1;
+      --accent-2: #8b5cf6;
+      --card: #ffffff;
+    }
+
+    /* Base & accessibility */
+    *,*::before,*::after{box-sizing:border-box}
+    html{font-size:16px}
+    html,body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden;scroll-behavior:smooth}
+    p{line-height:1.55;font-size:1rem}
+    a{color:var(--accent)}
+    img,video,svg{max-width:100%;height:auto;display:block}
+
+    /* Cards */
+    .soft-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.03));backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.03);border-radius:var(--radius)}
+
+    /* Chips */
+    .chip{font-size:.85rem;background:rgba(139,92,246,0.08);border-radius:999px;padding:.25rem .6rem;color:var(--accent);display:inline-flex;align-items:center}
+    .chip-red{font-size:.85rem;background:rgba(255,80,80,0.06);border-radius:999px;padding:.25rem .6rem;color:#ff6b6b;display:inline-flex;align-items:center}
+
+    /* Buttons / CTAs */
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .8rem;border-radius:.6rem;font-weight:600;cursor:pointer;transition:transform .14s ease,box-shadow .14s ease}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;padding:.65rem 1rem;border-radius:.75rem;box-shadow:0 10px 30px rgba(99,102,241,0.09)}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
+    .btn:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(2,6,23,0.12)}
+    a.btn{text-decoration:none}
+
+    /* Card hover */
+    .card-hover{transition:transform .25s ease,box-shadow .25s ease}
+    .card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(2,6,23,0.45)}
+
+    /* reveal animation */
+    .reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.revealed{opacity:1;transform:none}
+
+    /* subtle floating */
+    @keyframes floaty {0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+    .floaty{animation:floaty 4s ease-in-out infinite}
+
+    /* Profile */
+    .profile-wrap{width:clamp(72px,12vw,128px);height:clamp(72px,12vw,128px);border-radius:999px;overflow:hidden;border:4px solid rgba(139,92,246,0.12);box-shadow:0 8px 30px rgba(2,6,23,0.6);transition:transform .28s ease,box-shadow .28s ease, border-color .15s ease;cursor:pointer}
+    .profile-wrap:hover{transform:scale(1.06);box-shadow:0 18px 40px rgba(139,92,246,0.18)}
+    .profile-img{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* Theme toggle */
+    #theme-toggle{position:fixed;right:16px;top:16px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.04);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.03);color:var(--text);cursor:pointer;z-index:60}
+
+    /* Headings and visual hierarchy */
+    h1,h2,h3{letter-spacing:-0.01em}
+    h2{position:relative;padding-bottom:.45rem}
+    h2::after{content:"";position:absolute;left:0;bottom:0;width:48px;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:3px}
+    h3{font-size:1.05rem}
+
+    /* Focus and accessibility */
+    :focus{outline:none}
+    :focus-visible, a:focus-visible, button:focus-visible, .btn:focus-visible, .profile-wrap:focus-visible{outline:3px solid rgba(99,102,241,0.18);outline-offset:3px;border-radius:8px}
+
+    /* responsive tweaks */
+    @media (max-width:520px){
+      .muted{font-size:.95rem}
+      main{padding-left:16px;padding-right:16px}
+    }
+
+    /* small utilities */
+    .muted{color:var(--muted)}
+
+    /* badge styles */
+    .badge-sm{display:inline-flex;align-items:center;gap:4px;font-size:0.75rem;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);padding:4px 8px;border-radius:6px;color:var(--accent)}
+  </style>
+</head>
+<body>
+  <button id="theme-toggle" aria-label="Alternar tema">🌙</button>
+
+  <main class="max-w-5xl mx-auto p-6 md:p-12">
+    <!-- Header -->
+    <header class="flex flex-row flex-wrap items-center justify-between gap-6">
+      <div class="flex-1 min-w-0">
+        <h1 class="text-3xl md:text-4xl font-extrabold">Juan Torres</h1>
+        <p class="mt-1 text-sm muted">Backend Engineer • Laravel • TDD • Arquitetura Escalável</p>
+        <p class="mt-3 text-sm reveal" data-delay="300">Especialista em desenvolvimento backend com foco em PHP/Laravel, microsserviços e pipelines de qualidade.
+        <p class="mt-3 text-sm reveal" data-delay="400">
+        Formado em <span class="chip">Análise e Desenvolvimento de Sistemas - FATEC</span>
+        </p>
+        <p class=" text-sm reveal" data-delay="500" >
+        Pós-graduando em <span class="chip-red">MBA Engenharia de Software (Impacta)</span>
+        </p>
+        <p>Comprometido com código limpo, testes automatizados e soluções escaláveis.</p>
+
+        <div class="mt-4 flex items-center gap-3">
+          <a class="btn primary text-sm" href="#contact" id="contact-btn">Contato</a>
+          <a class="btn ghost text-sm" href="#projects">Projetos</a>
+          <a class="btn ghost text-sm" href="https://github.com/eljuanreis" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+
+      <!-- Photo with circular crop, shadow, hover scale -->
+      <div class="flex items-center gap-4 flex-shrink-0">
+        <div class="text-right hidden md:block muted">
+          <div class="text-sm">São Paulo; SP</div>
+          <div class="mt-2 text-xs muted">11 94341-4666 • juantorrescontato@gmail.com</div>
+          <div class="mt-2"><a class="underline" href="https://www.linkedin.com/in/juantorresdesenvolvedor" target="_blank" rel="noopener noreferrer">linkedin.com/in/juantorresdesenvolvedor</a></div>
+        </div>
+
+        <div class="profile-wrap" title="Foto de Juan Torres" role="img" aria-label="Foto de Juan Torres" tabindex="0">
+          <img src="https://i.imgur.com/5egeKy3.jpeg" alt="Foto de Juan Torres" class="profile-img" loading="lazy" decoding="async" width="512" height="512" />
+        </div>
+      </div>
+    </header>
+
+    <!-- About -->
+    <section class="mt-8 soft-card p-6 rounded-2xl shadow-md border border-[rgba(255,255,255,0.03)] reveal" data-delay="150">
+      <div class="md:flex md:gap-6 md:items-center">
+        <div class="flex-1">
+          <h2 class="text-xl font-bold">Sobre</h2>
+          <p class="mt-2 text-sm muted">Sou desenvolvedor backend com 5+ anos de experiência em PHP e Laravel, especializado em arquitetura escalável, integração de APIs de alto volume, testes automatizados (TDD) e pipelines de CI/CD robustos. Tenho atuado em projetos de missão crítica na Folha de S.Paulo, processando milhões de requisições mensais com alta disponibilidade.</p>
+
+          <ul class="mt-4 grid grid-cols-2 gap-2 text-sm muted">
+            <li><strong>Backend:</strong> PHP 5 ao 8.3. Laravel, Symfony e Yii</li>
+            <li><strong>Frontend:</strong> Vue 3, Livewire, Alpine.js, Tailwind</li>
+            <li><strong>Infra & DevOps:</strong> Docker, Redis, ElasticSearch, MySQL, PostgreSQL</li>
+            <li><strong>Qualidade:</strong> PHPUnit, Pest, PHPCS, Pipelines</li>
+          </ul>
+        </div>
+
+        <div class="mt-4 md:mt-0 md:w-56">
+          <div class="rounded-xl p-4 bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.03)]">
+            <div class="text-xs muted uppercase">Info rápida</div>
+            <div class="mt-3 text-sm space-y-2">
+              <div><strong>Formação:</strong> ADS - FATEC Zona Leste</div>
+              <div><strong>Em andamento:</strong> MBA Engenharia de Software (Impacta)</div>
+              <div><strong>Experiência:</strong> 5+ anos em produção</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects with animated cards -->
+    <section id="projects" class="mt-8">
+      <h2 class="text-2xl font-bold reveal" data-delay="200">Projetos selecionados</h2>
+      <p class="text-sm muted mt-1 reveal" data-delay="230">Atuação em produção; sistemas de alta escala, integração com APIs, testes e arquitetura.</p>
+
+      <div class="mt-4 grid gap-4">
+        <!-- Project 1 -->
+        <article class="p-6 rounded-xl border border-[rgba(255,255,255,0.03)] soft-card card-hover reveal" data-delay="260">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <h3 class="font-semibold">Plataforma RUF 2025 / Folha de S.Paulo</h3>
+                <span class="badge-sm">Desenvolvedor principal</span>
+              </div>
+              <p class="text-sm muted mt-2">Desenvolvimento backend do Ranking Universitário da Folha;
+                responsável por processamento de dados do Datafolha para a exibição no portal do RUF.</p>
+
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="chip">PHP</span>
+                <span class="chip">Laravel</span>
+                <span class="chip">MySQL</span>
+              </div>
+            </div>
+            <div class="text-sm flex-shrink-0">
+              <a class="btn ghost text-xs" target="_blank" rel="noopener noreferrer" href="https://ruf.folha.uol.com.br/2025/">→ Acessar</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="p-6 rounded-xl border border-[rgba(255,255,255,0.03)] soft-card card-hover reveal" data-delay="300">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <h3 class="font-semibold">Integração API TSE - Eleições 2024 / Folha</h3>
+                <span class="badge-sm">Crítico</span>
+              </div>
+              <p class="text-sm muted mt-2">Pipeline de ingestão, transformação e publicação de dados eleitorais em tempo real. Construí arquitetura de processamento em lote com workers, normalização de dados heterogêneos do TSE e publicação paralela para o portal do Grupo Folha.</p>
+
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="chip">PHP</span>
+                <span class="chip">MySQL</span>
+                <span class="chip">Paralelismo e concorrência</span>
+                <span class="chip">Integração com API</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="p-6 rounded-xl border border-[rgba(255,255,255,0.03)] soft-card card-hover reveal" data-delay="340">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <h3 class="font-semibold">Plataforma HALAL; Certificações / Electra</h3>
+                <span class="badge-sm">Full Stack</span>
+              </div>
+              <p class="text-sm muted mt-2">Sistema SaaS desenvolvido do zero para gestão de certificações internacionais (HALAL). Responsável por arquitetura backend e fluxo de aprovação documental</p>
+              <p class="text-xs muted mt-2"><strong>Escopo:</strong> ~40 features • Metodologia Scrum </p>
+
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="chip">PHP</span>
+                <span class="chip">Laravel</span>
+                <span class="chip">MySQL</span>
+                <span class="chip">Metodologias ágeis</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Skills / Services -->
+    <section class="mt-8 grid md:grid-cols-2 gap-6 reveal" data-delay="380">
+      <div class="p-6 rounded-xl border border-[rgba(255,255,255,0.03)] soft-card">
+        <h3 class="font-semibold">O que faço</h3>
+        <ul class="mt-3 text-sm muted space-y-2">
+          <li>APIs REST escaláveis com Laravel</li>
+          <li>Microsserviços e arquitetura baseada em eventos</li>
+          <li>TDD & testes automatizados (PHPUnit, Pest, integração contínua)</li>
+          <li>Otimização de performance (Caching, query optimization, indexing)</li>
+          <li>Front-end moderno (Vue 3, Livewire, Tailwind CSS)</li>
+          <li>DevOps & Docker (Linux, pipelines CI/CD, deployment)</li>
+        </ul>
+      </div>
+
+      <div class="p-6 rounded-xl border border-[rgba(255,255,255,0.03)] soft-card">
+        <h3 class="font-semibold">Skills & ferramentas</h3>
+        <div class="mt-3 grid grid-cols-2 gap-2 text-sm muted">
+          <div><strong>PHP & Backend:</strong></div>
+          <div>PHP, Laravel, Symfony e Yii</div>
+          <div><strong>Database:</strong></div>
+          <div>MySQL, PostgreSQL, Redis</div>
+          <div><strong>Frontend:</strong></div>
+          <div>Vue 3, Livewire, Tailwind, Alpine.js</div>
+          <div><strong>Qualidade:</strong></div>
+          <div>PHPUnit, Pest, e PHPCS</div>
+          <div><strong>DevOps:</strong></div>
+          <div>Docker, CI/CD</div>
+          <div><strong>Search:</strong></div>
+          <div>ElasticSearch</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="mt-8 p-6 rounded-xl border border-[rgba(255,255,255,0.03)] soft-card reveal" data-delay="420">
+      <h2 class="text-xl font-bold">Fale comigo</h2>
+      <p class="text-sm muted mt-1">Aberto para propostas, consultorias, freelances e novos desafios. Tempo de resposta: até 24h.</p>
+
+      <div class="mt-4 grid md:grid-cols-3 gap-4">
+        <div>
+          <p class="text-sm font-semibold">Email</p>
+          <a class="text-sm underline mt-1 block" href="mailto:juantorrescontato@gmail.com">juantorrescontato@gmail.com</a>
+        </div>
+        <div>
+          <p class="text-sm font-semibold">LinkedIn</p>
+          <a class="text-sm underline mt-1 block" href="https://www.linkedin.com/in/juantorresdesenvolvedor" target="_blank" rel="noopener noreferrer">linkedin.com/in/juantorresdesenvolvedor</a>
+        </div>
+        <div>
+          <p class="text-sm font-semibold">GitHub</p>
+          <a class="text-sm underline mt-1 block" href="https://github.com/eljuanreis" target="_blank" rel="noopener noreferrer">github.com/eljuanreis</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-8 text-center text-xs muted reveal" data-delay="460">
+      <div>Feito com o coração - Juan Torres</div>
+    </footer>
+  </main>
+
+  <script>
+    // Theme handling: default dark, toggle, persist in localStorage
+    (function(){
+      const root = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+      const LS_KEY = 'jt_theme';
+      // prefer dark default
+      const saved = localStorage.getItem(LS_KEY);
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved || (prefersDark ? 'dark' : 'light');
+      function apply(theme){
+        if(theme === 'light'){
+          root.setAttribute('data-theme','light');
+          btn.textContent = '☀️';
+        } else {
+          root.setAttribute('data-theme','dark');
+          btn.textContent = '🌙';
+        }
+        localStorage.setItem(LS_KEY, theme);
+      }
+      apply(initial);
+      btn.addEventListener('click', ()=>{
+        const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        apply(current === 'light' ? 'dark' : 'light');
+      });
+    })();
+
+    // Intersection Observer to reveal elements with stagger
+    document.addEventListener('DOMContentLoaded', function(){
+      const reveals = Array.from(document.querySelectorAll('.reveal'));
+      const observer = new IntersectionObserver((entries) =>{
+        entries.forEach(entry =>{
+          if(entry.isIntersecting){
+            const el = entry.target;
+            const delay = Number(el.dataset.delay) || 0;
+            setTimeout(()=> el.classList.add('revealed'), delay);
+            observer.unobserve(el);
+          }
+        })
+      },{threshold:0.12});
+      reveals.forEach(r => observer.observe(r));
+
+      // smooth scroll for internal links
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', e=>{
+          const href = a.getAttribute('href');
+          if(href.length > 1){
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+          }
+        });
+      });
+
+      // profile image hover: small accessibility focus handler
+      const profileWrap = document.querySelector('.profile-wrap');
+      if(profileWrap){
+        profileWrap.addEventListener('keydown', (e)=>{
+          if(e.key === 'Enter' || e.key === ' '){
+            profileWrap.classList.toggle('scale-110');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
